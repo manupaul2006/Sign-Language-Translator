@@ -1,361 +1,149 @@
-# Sign Language Dataset Collector 🤟
+Sign Language Dataset Collector
 
-A Python-based computer vision tool for collecting and organizing **sign language hand-gesture datasets** using a webcam and **MediaPipe Hands**.
+A simple Python program that uses your webcam to detect hand signs and automatically save them as dataset images and landmark data.
 
-This project is intended for collecting training data for a machine-learning system that can later recognize sign language gestures and convert them into text.
+Requirements
 
-## 📌 Overview
+- Python 3.9 or newer
+- Webcam
+- Windows/Linux/macOS
 
-The dataset collector uses your webcam to detect hand landmarks in real time.
+1. Install Python
 
-Instead of manually taking screenshots for every sign, the application can automatically detect a stable hand pose and save it as a training sample.
+Make sure Python is installed:
 
-For every captured sample, the system can store:
+python --version
 
-* A cropped image of the hand gesture
-* Normalized MediaPipe hand landmarks
-* Handedness information
-* Detection confidence
-* Timestamp and other metadata
+If Python is not installed, install it from the official Python website.
 
-The collected data can then be used to train a sign-language recognition model.
+2. Install Required Libraries
 
-## ✨ Features
+Open a terminal in the project folder and run:
 
-* 🤟 Supports different static hand signs
-* 🖐️ Supports up to two hands
-* 📷 Automatic image capture
-* 🎯 Stable-pose detection
-* 🚫 Duplicate-pose prevention
-* 🏷️ Sign labeling
-* 📊 Sample counter
-* 📁 Automatic dataset organization
-* 🔢 Saves MediaPipe landmarks as JSON
-* 🎮 Manual capture using the keyboard
-* 🔄 Reset capture state
-* ⚡ Real-time webcam processing
-
-## 🏗️ Project Architecture
-
-```text
-                 Webcam
-                   │
-                   ▼
-            OpenCV Video Feed
-                   │
-                   ▼
-             MediaPipe Hands
-                   │
-          ┌────────┴────────┐
-          │                 │
-       Hand 1             Hand 2
-          │                 │
-          └────────┬────────┘
-                   ▼
-           Landmark Extraction
-                   │
-                   ▼
-             Normalization
-                   │
-                   ▼
-             Stability Check
-                   │
-                   ▼
-           Duplicate Detection
-                   │
-                   ▼
-             Save Sample
-             /          \
-            ▼            ▼
-       Image (.jpg)   Landmarks (.json)
-```
-
-## 🛠️ Technologies Used
-
-| Technology | Purpose                                |
-| ---------- | -------------------------------------- |
-| Python     | Main programming language              |
-| OpenCV     | Webcam access and image processing     |
-| MediaPipe  | Hand detection and landmark extraction |
-| JSON       | Storing landmark data                  |
-
-## 📋 Requirements
-
-Make sure Python is installed on your system.
-
-Install the required packages:
-
-```bash
 pip install opencv-python mediapipe==0.10.21
-```
 
-The project may also require additional packages depending on the version of the collector you are using.
+3. Run the Program
 
-## 🚀 Installation
+Run:
 
-Clone the repository:
-
-```bash
-git clone https://github.com/your-username/your-repository.git
-```
-
-Move into the project directory:
-
-```bash
-cd your-repository
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Run the collector:
-
-```bash
 python sign_language_dataset_collector.py
-```
 
-## 🎮 Controls
+Your webcam window should open.
 
-| Key     | Action                            |
-| ------- | --------------------------------- |
-| `A-Z`   | Select the label/sign             |
-| `SPACE` | Manually capture the current sign |
-| `R`     | Reset duplicate/capture state     |
-| `Q`     | Quit the application              |
+4. Select a Sign Label
+
+Press a letter key to select the sign you want to collect.
 
 For example:
 
-```text
-Press A
-   ↓
-Show the sign for A
-   ↓
-Hold the pose
-   ↓
-System captures it automatically
-```
+A → Collect sign A
+B → Collect sign B
+C → Collect sign C
 
-Then:
+The selected label will be shown on the screen.
 
-```text
-Press B
-   ↓
-Show the sign for B
-   ↓
-System captures it automatically
-```
+5. Capture a Sign
 
-## 📂 Dataset Structure
+1. Select the label.
+2. Show the sign in front of the camera.
+3. Keep your hand(s) reasonably still.
+4. The program will automatically capture the sign when the pose is stable.
 
-The application organizes captured data into separate folders for each sign.
+You can also press:
 
-```text
+SPACE
+
+to manually capture the current pose.
+
+6. Dataset Location
+
+Captured data is automatically saved inside the "dataset" folder.
+
+The structure will look like:
+
 dataset/
-│
 ├── images/
 │   ├── A/
-│   │   ├── 0001.jpg
-│   │   ├── 0002.jpg
-│   │   └── ...
-│   │
 │   ├── B/
-│   │   ├── 0001.jpg
-│   │   ├── 0002.jpg
-│   │   └── ...
-│   │
 │   └── C/
 │
 └── landmarks/
     ├── A/
-    │   ├── 0001.json
-    │   ├── 0002.json
-    │   └── ...
-    │
     ├── B/
-    │   ├── 0001.json
-    │   ├── 0002.json
-    │   └── ...
-    │
     └── C/
-```
 
-## 🧠 Why Save Landmarks?
+The "images" folders contain the captured hand images.
 
-MediaPipe provides **21 landmarks for each detected hand**.
+The "landmarks" folders contain the corresponding MediaPipe hand landmark data in JSON format.
 
-Instead of relying only on the image, the project also saves the landmark coordinates.
+7. Keyboard Controls
 
-This gives us two possible approaches for the future:
+Key| Function
+"A-Z"| Select sign label
+"SPACE"| Manually capture
+"R"| Reset capture state
+"Q"| Exit program
 
-### Image-based recognition
+8. Collecting Multiple Signs
 
-```text
-Image
-  ↓
-CNN / Deep Learning Model
-  ↓
-Predicted Sign
-```
+Example:
 
-### Landmark-based recognition
+Press A
+↓
+Show A sign
+↓
+Wait for automatic capture
+↓
+Change the pose slightly if another sample is needed
+↓
+Press B
+↓
+Show B sign
+↓
+Wait for automatic capture
 
-```text
-Hand Landmarks
-      ↓
-ML Classifier
-      ↓
-Predicted Sign
-```
+For better training data, collect multiple samples for each sign.
 
-Landmark-based models can be much smaller and faster because they work with numerical hand coordinates instead of the complete image.
+Troubleshooting
 
-## 📸 Dataset Collection Guidelines
+Webcam does not open
 
-For a useful machine-learning dataset, avoid collecting every sample from exactly the same position.
+Make sure:
 
-Try to collect variations such as:
+- Your webcam is connected.
+- No other application is currently using it.
+- Python has permission to access the webcam.
 
-* Different hand positions
-* Different distances from the camera
-* Slight rotations
-* Different backgrounds
-* Different lighting conditions
-* Different people, when possible
+If you have multiple cameras, you may need to change:
 
-For example:
+cv2.VideoCapture(0)
 
-```text
-A
-A at different position
-A slightly rotated
-A farther from camera
-A closer to camera
-```
+to:
 
-This helps the model learn the **sign itself** instead of memorizing one particular camera setup.
+cv2.VideoCapture(1)
 
-## 👥 Team Workflow
+or another camera index.
 
-This program is primarily a **development/data-collection tool**.
+MediaPipe installation fails
 
-The workflow for the complete project can be:
+Try upgrading pip:
 
-```text
-            DATA COLLECTION
-                   │
-                   ▼
-        Sign Language Dataset
-                   │
-                   ▼
-             Preprocessing
-                   │
-                   ▼
-           Model Training
-                   │
-                   ▼
-          Trained ML Model
-                   │
-                   ▼
-          Final Application
-                   │
-                   ▼
-        Sign Language → Text
-```
+python -m pip install --upgrade pip
 
-The person using the final application does **not** need to manually select labels or press capture keys.
+Then install the dependencies again:
 
-Those controls are for the team while creating the dataset.
+pip install opencv-python mediapipe
 
-## 🔮 Future Improvements
+Program exits immediately
 
-Possible future additions include:
+Run it from the terminal so that any error message remains visible:
 
-* Real-time sign prediction
-* Text output
-* Text-to-speech
-* Support for larger sign vocabularies
-* Dynamic gesture recognition
-* Sequence-based models for moving signs
-* User-friendly GUI
-* Confidence score display
-* Dataset statistics
-* Automatic train/validation/test splitting
-* Model training integration
-* Multi-language text output
+python sign_language_dataset_collector.py
 
-## ⚠️ Current Limitation
+Exit
 
-This collector is primarily designed for **static hand gestures**.
+Press:
 
-Some signs depend on movement over time rather than a single hand pose.
+Q
 
-For those signs, a future version should capture a sequence of landmarks:
-
-```text
-Frame 1 → Landmark Position
-Frame 2 → Landmark Position
-Frame 3 → Landmark Position
-Frame 4 → Landmark Position
-       ↓
-    Sequence Model
-       ↓
-   Sign Prediction
-```
-
-Models such as LSTM, GRU, or Transformer-based architectures could eventually be explored for dynamic gestures.
-
-## 🎯 Project Goal
-
-The larger goal of this project is to build a computer-vision-based system capable of recognizing sign language and converting it into readable text.
-
-```text
-🤟 Sign Language
-       ↓
-     Camera
-       ↓
-   Hand Detection
-       ↓
-  ML Recognition
-       ↓
-      Text
-```
-
-## 🤝 Contributing
-
-Contributions and improvements are welcome.
-
-You can contribute by improving:
-
-* Data collection
-* Preprocessing
-* Machine-learning models
-* Recognition accuracy
-* User interface
-* Accessibility
-* Dynamic gesture recognition
-
-## 📄 License
-
-Add your preferred open-source license here.
-
-For example:
-
-```text
-MIT License
-```
-
-## 👨‍💻 Project Status
-
-🚧 **In Development**
-
-Currently focusing on:
-
-* Dataset collection
-* Hand landmark extraction
-* Sign classification
-* Machine-learning model development
-
-The final goal is a working **Sign Language → Text** recognition system.
+while the webcam window is active.
