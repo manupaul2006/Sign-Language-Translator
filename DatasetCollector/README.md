@@ -1,66 +1,105 @@
-Sign Language Dataset Collector
+# Sign Language Dataset Collector
 
-A simple Python program that uses your webcam to detect hand signs and automatically save them as dataset images and landmark data.
+A simple Python program that uses your webcam and MediaPipe to detect hand signs and automatically save them as images and landmark data.
 
-Requirements
+## Requirements
 
-- Python 3.9 or newer
-- Webcam
-- Windows/Linux/macOS
+* Python 3.9 or newer
+* Webcam
+* Windows/Linux/macOS
 
-1. Install Python
+## Installation
 
-Make sure Python is installed:
+### 1. Install Python
 
-python --version
+Download and install Python from the official Python website:
 
-If Python is not installed, install it from the official Python website.
+https://www.python.org/downloads/
 
-2. Install Required Libraries
+Make sure **Add Python to PATH** is enabled during installation.
+
+### 2. Install the required libraries
 
 Open a terminal in the project folder and run:
 
-pip install opencv-python mediapipe==0.10.21
+```bash
+pip install opencv-python mediapipe
+```
 
-3. Run the Program
+## Running the Program
 
-Run:
+Open a terminal inside the project folder and run:
 
+```bash
 python sign_language_dataset_collector.py
+```
 
-Your webcam window should open.
+Your webcam window will open.
 
-4. Select a Sign Label
+## How to Use
 
-Press a letter key to select the sign you want to collect.
+### Select a Sign
+
+Press a keyboard key from `A` to `Z` to select the label you want to collect.
 
 For example:
 
-A → Collect sign A
-B → Collect sign B
-C → Collect sign C
+```text
+Press A → Collect the A sign
+Press B → Collect the B sign
+Press C → Collect the C sign
+```
 
 The selected label will be shown on the screen.
 
-5. Capture a Sign
+### Automatic Capture
 
-1. Select the label.
-2. Show the sign in front of the camera.
-3. Keep your hand(s) reasonably still.
-4. The program will automatically capture the sign when the pose is stable.
+1. Select a label.
+2. Show the corresponding sign to the camera.
+3. Keep your hand steady for a short moment.
+4. The program will automatically capture the sign.
 
-You can also press:
+You don't need to press a button for every image.
 
+### Manual Capture
+
+Press:
+
+```text
 SPACE
+```
 
-to manually capture the current pose.
+to manually capture the current hand pose.
 
-6. Dataset Location
+### Reset
 
-Captured data is automatically saved inside the "dataset" folder.
+Press:
 
-The structure will look like:
+```text
+R
+```
 
+to reset the capture state if necessary.
+
+### Exit
+
+Press:
+
+```text
+Q
+```
+
+to close the program.
+
+## Captured Files
+
+The program automatically creates a dataset folder.
+
+Captured images and landmark data are stored separately for each label.
+
+Example:
+
+```text
 dataset/
 ├── images/
 │   ├── A/
@@ -71,79 +110,61 @@ dataset/
     ├── A/
     ├── B/
     └── C/
+```
 
-The "images" folders contain the captured hand images.
+Each captured sign produces:
 
-The "landmarks" folders contain the corresponding MediaPipe hand landmark data in JSON format.
+* `.jpg` — cropped image of the detected hand(s)
+* `.json` — MediaPipe landmark information
 
-7. Keyboard Controls
+## Recommended Data Collection
 
-Key| Function
-"A-Z"| Select sign label
-"SPACE"| Manually capture
-"R"| Reset capture state
-"Q"| Exit program
+For each sign, collect multiple samples instead of capturing only one image.
 
-8. Collecting Multiple Signs
+While collecting data, vary:
 
-Example:
+* Hand position
+* Distance from the camera
+* Slight hand rotation
+* Lighting
+* Background
 
-Press A
-↓
-Show A sign
-↓
-Wait for automatic capture
-↓
-Change the pose slightly if another sample is needed
-↓
-Press B
-↓
-Show B sign
-↓
-Wait for automatic capture
+This helps create a more useful dataset for training the machine-learning model.
 
-For better training data, collect multiple samples for each sign.
+## Troubleshooting
 
-Troubleshooting
-
-Webcam does not open
+### Camera does not open
 
 Make sure:
 
-- Your webcam is connected.
-- No other application is currently using it.
-- Python has permission to access the webcam.
+* Your webcam is connected.
+* No other application is using the webcam.
+* You have selected the correct camera in the code if your computer has multiple cameras.
 
-If you have multiple cameras, you may need to change:
+### Hand is not detected
 
-cv2.VideoCapture(0)
+Try:
 
-to:
+* Moving closer to the camera.
+* Improving the lighting.
+* Keeping the entire hand inside the camera frame.
+* Avoiding objects covering the hand.
 
-cv2.VideoCapture(1)
-
-or another camera index.
-
-MediaPipe installation fails
-
-Try upgrading pip:
-
-python -m pip install --upgrade pip
-
-Then install the dependencies again:
-
-pip install opencv-python mediapipe
-
-Program exits immediately
-
-Run it from the terminal so that any error message remains visible:
-
-python sign_language_dataset_collector.py
-
-Exit
+### Program is not responding
 
 Press:
 
+```text
 Q
+```
 
-while the webcam window is active.
+to exit and run the program again.
+
+## Controls Summary
+
+| Key     | Action              |
+| ------- | ------------------- |
+| `A-Z`   | Select sign label   |
+| `SPACE` | Manual capture      |
+| `R`     | Reset capture state |
+| `Q`     | Exit                |
