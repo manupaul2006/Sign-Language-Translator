@@ -23,7 +23,7 @@ Make sure **Add Python to PATH** is enabled during installation.
 Open a terminal in the project folder and run:
 
 ```bash
-pip install opencv-python mediapipe
+pip install opencv-python mediapipe==0.10.21
 ```
 
 ## Running the Program
