@@ -86,7 +86,7 @@ Make sure Python is installed on your system.
 Install the required packages:
 
 ```bash
-pip install opencv-python mediapipe
+pip install opencv-python mediapipe==0.10.21
 ```
 
 The project may also require additional packages depending on the version of the collector you are using.
