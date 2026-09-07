@@ -275,8 +275,8 @@ while cap.isOpened():
                 status = f"MANUAL SAVED  {label}  |  sample {sample_number}"
         else:
             status = "Cannot capture: no valid hand detected"
-    elif ord("A") <= key <= ord("Z"):
-        label = chr(key)
+    elif (ord("A") <= key <= ord("Z")) or (ord('a') <= key <= ord('z')):
+        label = chr(key).capitalize()
         last_captured_signature = None
         stable_count = 0
         status = f"Label changed to {label}"
