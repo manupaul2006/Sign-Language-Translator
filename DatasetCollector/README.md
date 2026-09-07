@@ -40,7 +40,7 @@ Your webcam window will open.
 
 ### Select a Sign
 
-Press a keyboard key from `A` to `Z` to select the label you want to collect.
+Press a keyboard key from `A`,`a` to `Z`,`z` to select the label you want to collect.
 
 For example:
 

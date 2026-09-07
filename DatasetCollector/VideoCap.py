@@ -258,9 +258,9 @@ while cap.isOpened():
     cv2.imshow("Sign Language Dataset Collector", display)
     key = cv2.waitKey(1) & 0xFF
 
-    if key == ord("q"):
+    if (key == ord("q")) or (key == ord("Q")):
         break
-    elif key == ord("r"):
+    elif (key == ord("r")) or (key == ord("R")):
         last_captured_signature = None
         status = "Duplicate lock reset"
     elif key == 32:  # SPACE
